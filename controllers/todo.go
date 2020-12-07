@@ -12,9 +12,16 @@ func GetTodos(c *gin.Context) {
 	var todo []models.Todo
 	err := models.GetAllTodos(&todo)
 	if err != nil {
-		c.AbortWithStatus(http.StatusNotFound)
+		c.AbortWithStatusJSON(404, gin.H{
+			"message": "todo not found",
+			"status":  http.StatusNotFound,
+		})
 	} else {
-		c.JSON(http.StatusOK, todo)
+		c.JSON(http.StatusOK, gin.H{
+			"results": todo,
+			"message": "todo founded",
+			"status":  http.StatusOK,
+		})
 	}
 }
 
@@ -24,9 +31,16 @@ func CreateATodo(c *gin.Context) {
 	c.BindJSON(&todo)
 	err := models.CreateATodo(&todo)
 	if err != nil {
-		c.AbortWithStatus(http.StatusNotFound)
+		c.AbortWithStatusJSON(404, gin.H{
+			"message": "todo not found",
+			"status":  http.StatusNotFound,
+		})
 	} else {
-		c.JSON(http.StatusOK, todo)
+		c.JSON(http.StatusOK, gin.H{
+			"results": todo,
+			"message": "todo founded",
+			"status":  http.StatusOK,
+		})
 	}
 }
 
@@ -36,9 +50,16 @@ func GetATodo(c *gin.Context) {
 	var todo models.Todo
 	err := models.GetATodo(&todo, id)
 	if err != nil {
-		c.AbortWithStatus(http.StatusNotFound)
+		c.AbortWithStatusJSON(404, gin.H{
+			"message": "todo not found",
+			"status":  http.StatusNotFound,
+		})
 	} else {
-		c.JSON(http.StatusOK, todo)
+		c.JSON(http.StatusOK, gin.H{
+			"results": todo,
+			"message": "todo founded",
+			"status":  http.StatusOK,
+		})
 	}
 }
 
@@ -48,14 +69,24 @@ func UpdateATodo(c *gin.Context) {
 	id := c.Params.ByName("id")
 	err := models.GetATodo(&todo, id)
 	if err != nil {
-		c.JSON(http.StatusNotFound, todo)
+		c.AbortWithStatusJSON(404, gin.H{
+			"message": "todo not found",
+			"status":  http.StatusNotFound,
+		})
 	}
 	c.BindJSON(&todo)
 	err = models.UpdateATodo(&todo, id)
 	if err != nil {
-		c.AbortWithStatus(http.StatusNotFound)
+		c.AbortWithStatusJSON(404, gin.H{
+			"message": "todo not found",
+			"status":  http.StatusNotFound,
+		})
 	} else {
-		c.JSON(http.StatusOK, todo)
+		c.JSON(http.StatusOK, gin.H{
+			"results": todo,
+			"message": "todo founded",
+			"status":  http.StatusOK,
+		})
 	}
 }
 
@@ -65,8 +96,15 @@ func DeleteATodo(c *gin.Context) {
 	id := c.Params.ByName("id")
 	err := models.DeleteATodo(&todo, id)
 	if err != nil {
-		c.AbortWithStatus(http.StatusNotFound)
+		c.AbortWithStatusJSON(404, gin.H{
+			"message": "todo not found",
+			"status":  http.StatusNotFound,
+		})
 	} else {
-		c.JSON(http.StatusOK, gin.H{"id" + id: "deleted"})
+		c.JSON(http.StatusOK, gin.H{
+			"results": "id " + id + " is deleted",
+			"message": "todo founded",
+			"status":  http.StatusOK,
+		})
 	}
 }

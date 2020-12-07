@@ -20,7 +20,7 @@ func main() {
 	}
 
 	defer config.DB.Close()
-	config.DB.AutoMigrate(&models.Todo{})
+	config.DB.AutoMigrate(&models.Todo{}, &models.User{})
 
 	r := route.Routes()
 	r.Run()

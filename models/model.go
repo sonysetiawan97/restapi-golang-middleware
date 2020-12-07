@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"example.com/v1/config"
+
 	// _ ...
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -56,9 +57,6 @@ func GetUser(user *User) (err error) {
 
 // RegisterUser ...
 func RegisterUser(user *User) (err error) {
-	if len(user.Username) == 0 && len(user.Password) == 0 {
-		return fmt.Errorf("Please fill username and password")
-	}
 	if err = config.DB.Create(user).Error; err != nil {
 		return err
 	}

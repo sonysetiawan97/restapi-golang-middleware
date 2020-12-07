@@ -11,10 +11,12 @@ func Routes() *gin.Engine {
 	r := gin.Default()
 	login := r.Group("/")
 	{
+		login.GET("login", controllers.LoginForm)
 		login.POST("login", controllers.Login)
+		login.GET("register", controllers.RegisterForm)
 		login.POST("register", controllers.Register)
 	}
-	v1 := r.Group("/v1", middleware.AuthJWT)
+	v1 := r.Group("/api/v1", middleware.AuthJWT)
 	{
 		v1.GET("todo", controllers.GetTodos)
 		v1.POST("todo", controllers.CreateATodo)
